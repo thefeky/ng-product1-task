@@ -1,0 +1,42 @@
+<p class="ms-3 fw-bold">Welcome to our shopping website!</p>
+<div class="row">
+  <div class="col-md-4 mb-3" *ngFor="let product of products">
+    <div class="card">
+      <p
+        class="stock-status"
+        [ngClass]="{
+          'in-stock': product.stock > 0,
+          'out-of-stock': product.stock === 0
+        }"
+      >
+        {{ product.stock === 0 ? "Out of stock" : "In stock" }}
+      </p>
+
+      <img
+        [src]="product.images[0]"
+        class="card-img-top"
+        alt="{{ product.title }}"
+        (click)="productDetailsNavigation(product.id)"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ product.title }}</h5>
+        <p class="card-text">{{ product.description }}</p>
+        <p class="card-text">{{ product.price }} L.E</p>
+        <div class="rating">
+          <ng-container *ngFor="let star of getStars(product.rating)">
+            <i
+              class="fas fa-star"
+              [ngClass]="{
+                'text-warning': star.filled,
+                'text-secondary': !star.filled
+              }"
+            ></i>
+          </ng-container>
+        </div>
+        <p>Rating: {{ product.rating }}</p>
+
+        <button class="btn btn-primary">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
